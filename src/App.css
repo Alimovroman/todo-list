@@ -1,0 +1,27 @@
+.App {
+  padding: 30px;
+  display: flex;
+}
+
+.App > div {
+  margin-right: 50px;
+}
+.task-done {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+.task {
+  font-weight: bold;
+}
+.btn-active {
+color: white;
+background-color: hotpink;
+border: 2px solid hotpink;
+border-radius: 5px;
+}
+.input-error {
+  border:5px solid red;
+  outline: none}
+.error {
+color: red;
+}
