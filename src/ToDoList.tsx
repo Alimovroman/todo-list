@@ -4,15 +4,17 @@ import './App.css';
 
 type ToDoListPropsType = {
     title: string
+    todoListId: string
     tasks: Array<TaskType>
-    removeTask: (setTask: Dispatch<Array<TaskType>>, mainTask: Array<TaskType>, id: string) => void
-    changeFilter: (setFilter: Dispatch<FilterValuesType>, filter: FilterValuesType) => void
-    setFilter: Dispatch<FilterValuesType>
+    removeTask: (todoListId: string,  id: string) => void
+    changeFilter: (todoListId: string,  filter: FilterValuesType) => void
+    // setFilter: Dispatch<FilterValuesType>
     setTask: Dispatch<Array<TaskType>>
     mainTasks: Array<TaskType>
-    addTask: (setTask: Dispatch<Array<TaskType>>, tasks: Array<TaskType>, str: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    addTask: (todoListId: string, str: string) => void
+    changeTaskStatus: (todoListId: string, taskId: string, isDone: boolean) => void
     filter: FilterValuesType
+    removeTodoList: (taskId: string) => void
 
 }
 
@@ -31,7 +33,7 @@ const ToDoList: FC<ToDoListPropsType> = (props) => {
     const addTask = () => {
         const trimmedTitle = title.trim()
         if(trimmedTitle !== '') {
-            props.addTask(props.setTask, props.mainTasks, title)
+            props.addTask(props.todoListId, title)
 
         } else {
             setError(true)
@@ -46,16 +48,18 @@ const ToDoList: FC<ToDoListPropsType> = (props) => {
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         e.key === 'Enter' && addTask()
     }
-    const handlerCreator = (filter: FilterValuesType) => () => props.changeFilter(props.setFilter, filter)
+    const handlerCreator = (filter: FilterValuesType) => () => props.changeFilter(props.todoListId,  filter)
     const errorMessage =  error && <div className={'error'}>Error</div>
     const errorClassName = error ? 'input-error' : ''
-
+    const removeTodoListHandler = () => {
+        props.removeTodoList(props.todoListId)
+    }
 
     let taskList = props.tasks.length === 0
         ? <span>Your task list is empty</span>
         : props.tasks.map((task: TaskType) => {
-            const removeTask = () => props.removeTask(props.setTask, props.mainTasks, task.id)
-            const changeTaskStatus = (e:ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked)
+            const removeTask = () => props.removeTask(props.todoListId, task.id)
+            const changeTaskStatus = (e:ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(props.todoListId, task.id, e.currentTarget.checked)
             const taskClasses = task.isDone ? "task-done" : 'task'
             return (
                 <li key={task.id} className={taskClasses}>
@@ -72,6 +76,9 @@ const ToDoList: FC<ToDoListPropsType> = (props) => {
     return (
         <div>
             <h3>{props.title}</h3>
+            <button onClick={removeTodoListHandler}>
+                X
+            </button>
             <div>
                 <input
                     onChange={e => onChangeHandler(e)}
