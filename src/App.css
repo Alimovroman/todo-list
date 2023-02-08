@@ -1,6 +1,7 @@
 .App {
   padding: 30px;
   display: flex;
+  width: 100%;
 }
 
 .App > div {
@@ -24,4 +25,12 @@ border-radius: 5px;
   outline: none}
 .error {
 color: red;
+}
+.header-task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-task button {
+  height: 22px;
 }
