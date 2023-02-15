@@ -3,6 +3,10 @@ import './App.css';
 import ToDoList, {TaskType} from "./ToDoList";
 import {v1} from "uuid";
 import SuperInput from "./component/SuperInput";
+import ButtonAppBar from "./component/ButtonAppBar";
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 
 export type FilterValuesType = 'all' | 'active' | 'deactive'
 
@@ -13,11 +17,6 @@ type todolistsType = {
 }
 
 function App() {
-    const title1: string = 'Ypo'
-    const title2: string = 'ad'
-    const title3: string = 'Ypasasdasdo'
-
-
     const [tasks1, setTask1] = useState<Array<TaskType>>([
         {id: '1', isDone: true, title: 'adad'},
         {id: '2', isDone: false, title: 'asdasd'},
@@ -33,7 +32,6 @@ function App() {
         {id: todolistID1, title: 'What to learn', filter: 'all'},
         {id: todolistID2, title: 'What to buy', filter: 'all'},
     ])
-
     let [tasks, setTasks] = useState({
         [todolistID1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
@@ -50,8 +48,6 @@ function App() {
             {id: v1(), title: "GraphQL2", isDone: false},
         ]
     })
-
-
     const changeFilter = (todoListId: string, filter: FilterValuesType) => {
         setTodolists(todolists.map(el => el.id === todoListId ? {...el, filter: filter} : el))
     }
@@ -110,37 +106,49 @@ function App() {
     }
     return (
         <div className="App">
-            <SuperInput callback={addTodolist}/>
-            {todolists.map(e => {
-                    let filteredTasksForRender = tasks[e.id]
-                    if (todolists[0].filter === 'active') {
-                        filteredTasksForRender = tasks[e.id].filter(task => task.isDone === true)
+            <ButtonAppBar/>
+            <Container fixed>
+                <Grid container style={{padding: '20px'}}>
+                    <SuperInput callback={addTodolist}/>
+                </Grid>
+                <Grid container spacing={3}>
+                    {
+                        todolists.map(e => {
+                            let filteredTasksForRender = tasks[e.id]
+                            if (e.filter === 'active') {
+                                filteredTasksForRender = tasks[e.id].filter(task => task.isDone === true)
+                            }
+                            if (e.filter === 'deactive') {
+                                filteredTasksForRender = tasks[e.id].filter(task => task.isDone === false)
+                            }
+                            return (
+                                <Grid item>
+                                    <Paper elevation={3} style={{padding: '10px'}}>
+                                        <ToDoList title={e.title}
+                                                  key={e.id}
+                                                  todoListId={e.id}
+                                                  addTask={addTask}
+                                                  tasks={filteredTasksForRender}
+                                                  removeTask={removeTask}
+                                                  changeFilter={changeFilter}
+                                                  mainTasks={tasks1}
+                                                  setTask={setTask1}
+                                                  changeTaskStatus={changeTaskStatus}
+                                                  removeTodoList={removeTodoList}
+                                                  editTask={editTask}
+                                                  editMainTitle={editMainTitle}
+                                                  filter={e.filter}
+                                        />
+                                    </Paper>
+                                </Grid>
+                            )
+                        })
                     }
-                    if (todolists[0].filter === 'deactive') {
-                        filteredTasksForRender = tasks[e.id].filter(task => task.isDone === false)
-                    }
-                    return (
-                        <ToDoList title={e.title}
-                                  key={e.id}
-                                  todoListId={e.id}
-                                  addTask={addTask}
-                                  tasks={filteredTasksForRender}
-                                  removeTask={removeTask}
-                                  changeFilter={changeFilter}
-                                  mainTasks={tasks1}
-                                  setTask={setTask1}
-                                  changeTaskStatus={changeTaskStatus}
-                                  removeTodoList={removeTodoList}
-                                  editTask={editTask}
-                                  editMainTitle={editMainTitle}
-                                  filter={e.filter}/>
-                    )
-                }
-            )}
-
+                </Grid>
+            </Container>
 
         </div>
     );
 }
 
-export default App;
+    export default App;

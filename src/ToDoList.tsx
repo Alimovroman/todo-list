@@ -3,7 +3,12 @@ import {FilterValuesType} from "./App";
 import './App.css';
 import SuperInput from "./component/SuperInput";
 import EditableSpan from "./component/EditableSpan";
-import {Button} from "@mui/material";
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 type ToDoListPropsType = {
     title: string
@@ -53,13 +58,18 @@ const ToDoList: FC<ToDoListPropsType> = (props) => {
 
             return (
                 <li key={task.id} className={taskClasses}>
-                    <input type="checkbox"
-                           checked={task.isDone}
-                           onChange={changeTaskStatus}
-                   />
+                   {/* <input type="checkbox"*/}
+                   {/*        checked={task.isDone}*/}
+                   {/*        onChange={changeTaskStatus}*/}
+                   {/*/>*/}
+                    <Checkbox {...label}
+                              checked={task.isDone}
+                              onChange={changeTaskStatus}
+                    />
                     <EditableSpan oldTitle={task.title} callback={(newTitle) => editTitle(task.id, newTitle)}/>
-                    <button onClick={removeTask}>x</button>
-
+                    <IconButton aria-label="delete" onClick={removeTask} color="secondary">
+                        <DeleteIcon />
+                    </IconButton>
                 </li>
             )
         })
@@ -68,7 +78,10 @@ const ToDoList: FC<ToDoListPropsType> = (props) => {
         <div>
             <div className={'header-task'}>
                 <EditableSpan oldTitle={props.title} callback={editMainTitle} />
-                <Button color="secondary" onClick={removeTodoListHandler}>X</Button>
+                <IconButton aria-label="delete" onClick={removeTodoListHandler} color="secondary">
+                    <DeleteIcon />
+                </IconButton>
+                {/*<Button color="secondary" onClick={removeTodoListHandler}>X</Button>*/}
                 {/*<button onClick={removeTodoListHandler}>*/}
                 {/*    X*/}
                 {/*</button>*/}
@@ -78,9 +91,18 @@ const ToDoList: FC<ToDoListPropsType> = (props) => {
                 {taskList}
             </ul>
             <div>
-                <button className={props.filter === 'all' ? 'btn-active' : ''} onClick={handlerCreator("all")}>All</button>
-                <button className={props.filter === 'active' ? 'btn-active' : ''} onClick={handlerCreator("active")}>Active</button>
-                <button className={props.filter === 'deactive' ? 'btn-active' : ''} onClick={handlerCreator("deactive")}>Completed</button>
+                <Button variant={props.filter === 'all' ?"outlined" : 'contained'} color="secondary" onClick={handlerCreator("all")}>
+                    All
+                </Button>
+                <Button variant={props.filter === 'active' ?"outlined" : 'contained'} color="success" onClick={handlerCreator("active")}>
+                    Active
+                </Button>
+                <Button variant={props.filter === 'deactive' ?"outlined" : 'contained'} color="error" onClick={handlerCreator("deactive")}>
+                    Completed
+                </Button>
+                {/*<button className={props.filter === 'all' ? 'btn-active' : ''} onClick={handlerCreator("all")}>All</button>*/}
+                {/*<button className={props.filter === 'active' ? 'btn-active' : ''} onClick={handlerCreator("active")}>Active</button>*/}
+                {/*<button className={props.filter === 'deactive' ? 'btn-active' : ''} onClick={handlerCreator("deactive")}>Completed</button>*/}
             </div>
         </div>
     );
