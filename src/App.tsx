@@ -1,4 +1,4 @@
-import React, {Dispatch, useState} from 'react';
+import React, { useState} from 'react';
 import './App.css';
 import ToDoList, {TaskType} from "./ToDoList";
 import {v1} from "uuid";
@@ -17,13 +17,6 @@ type todolistsType = {
 }
 
 function App() {
-    const [tasks1, setTask1] = useState<Array<TaskType>>([
-        {id: '1', isDone: true, title: 'adad'},
-        {id: '2', isDone: false, title: 'asdasd'},
-        {id: '3', isDone: true, title: 'adsssad'},
-        {id: '4', isDone: false, title: 'adsssad'},
-        {id: '5', isDone: false, title: 'asdasd2222ds'}
-    ])
 
     let todolistID1 = v1();
     let todolistID2 = v1();
@@ -122,17 +115,15 @@ function App() {
                                 filteredTasksForRender = tasks[e.id].filter(task => task.isDone === false)
                             }
                             return (
-                                <Grid item>
+                                <Grid item key={e.id}>
                                     <Paper elevation={3} style={{padding: '10px'}}>
                                         <ToDoList title={e.title}
-                                                  key={e.id}
+
                                                   todoListId={e.id}
                                                   addTask={addTask}
                                                   tasks={filteredTasksForRender}
                                                   removeTask={removeTask}
                                                   changeFilter={changeFilter}
-                                                  mainTasks={tasks1}
-                                                  setTask={setTask1}
                                                   changeTaskStatus={changeTaskStatus}
                                                   removeTodoList={removeTodoList}
                                                   editTask={editTask}

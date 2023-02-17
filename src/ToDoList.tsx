@@ -16,9 +16,6 @@ type ToDoListPropsType = {
     tasks: Array<TaskType>
     removeTask: (todoListId: string,  id: string) => void
     changeFilter: (todoListId: string,  filter: FilterValuesType) => void
-    // setFilter: Dispatch<FilterValuesType>
-    setTask: Dispatch<Array<TaskType>>
-    mainTasks: Array<TaskType>
     addTask: (todoListId: string, str: string) => void
     changeTaskStatus: (todoListId: string, taskId: string, isDone: boolean) => void
     filter: FilterValuesType
