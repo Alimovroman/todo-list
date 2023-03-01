@@ -18,17 +18,17 @@ export function sum(...nums: Array<number>): number {
 //  - "11", если треугольник обычный,
 //  - "00", если такого треугольника не существует.
 
-export function getTriangleType(a: number, b: number, c: number): string {
+export function getTriangleType(a: number, b: number, c: number): string | undefined {
+    if (a+ b < c || b+c < a || a+c < b) {
+        return '00'
+    }
     if (a === b && b === c) {
         return '10'
-    } else if (a < b && b === c) {
-        return '01'
-    } else if (a === b && b > c) {
+    // } else if (a < b && b === c || a === b && b > c) {
+    } else if (a === b || b === c || a === c) {
         return '01'
     } else if (a < b && b > c) {
         return '11'
-    } else {
-        return '00'
     }
 
 }
@@ -38,7 +38,8 @@ export function getTriangleType(a: number, b: number, c: number): string {
 // сумму цифр этого числа
 
 export function getSum(number: number): number {
-    let result = number.toString().split('').reduce((acc, value) => acc + (+value), 0)
+    let result = number.toString().split('')
+        .reduce((acc, value) => acc + (+value), 0)
     //...здесь пишем код.
     // В return стоит "заглушка", чтоб typescript не ругался
     // return .spit('').reduce((acc, value) => acc + value, 0)

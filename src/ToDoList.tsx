@@ -1,5 +1,5 @@
 import React, {KeyboardEvent, Dispatch, FC, useState, ChangeEvent} from 'react';
-import {FilterValuesType} from "./App";
+import {FilterValuesType, TaskType} from "./App";
 import './App.css';
 import SuperInput from "./component/SuperInput";
 import EditableSpan from "./component/EditableSpan";
@@ -25,12 +25,6 @@ type ToDoListPropsType = {
 
 }
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-
-}
 const ToDoList: FC<ToDoListPropsType> = (props) => {
     const handlerCreator = (filter: FilterValuesType) => () => props.changeFilter(props.todoListId,  filter)
     const removeTodoListHandler = () => {
@@ -55,10 +49,6 @@ const ToDoList: FC<ToDoListPropsType> = (props) => {
 
             return (
                 <li key={task.id} className={taskClasses}>
-                   {/* <input type="checkbox"*/}
-                   {/*        checked={task.isDone}*/}
-                   {/*        onChange={changeTaskStatus}*/}
-                   {/*/>*/}
                     <Checkbox {...label}
                               checked={task.isDone}
                               onChange={changeTaskStatus}
@@ -78,10 +68,6 @@ const ToDoList: FC<ToDoListPropsType> = (props) => {
                 <IconButton aria-label="delete" onClick={removeTodoListHandler} color="secondary">
                     <DeleteIcon />
                 </IconButton>
-                {/*<Button color="secondary" onClick={removeTodoListHandler}>X</Button>*/}
-                {/*<button onClick={removeTodoListHandler}>*/}
-                {/*    X*/}
-                {/*</button>*/}
             </div>
             <SuperInput callback={addTask}/>
             <ul>
@@ -97,9 +83,6 @@ const ToDoList: FC<ToDoListPropsType> = (props) => {
                 <Button variant={props.filter === 'deactive' ?"outlined" : 'contained'} color="error" onClick={handlerCreator("deactive")}>
                     Completed
                 </Button>
-                {/*<button className={props.filter === 'all' ? 'btn-active' : ''} onClick={handlerCreator("all")}>All</button>*/}
-                {/*<button className={props.filter === 'active' ? 'btn-active' : ''} onClick={handlerCreator("active")}>Active</button>*/}
-                {/*<button className={props.filter === 'deactive' ? 'btn-active' : ''} onClick={handlerCreator("deactive")}>Completed</button>*/}
             </div>
         </div>
     );
