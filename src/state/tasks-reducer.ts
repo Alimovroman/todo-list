@@ -12,7 +12,9 @@ type ChangeTitleACACType = ReturnType<typeof changeTitleAC>
 type ActionType = RemoveACType | AddTaskACType
     | ChangeTaskStatusACType | ChangeTitleACACType
     | AddTodolistACType | RemoveTodolistACType
-export const tasksReducer = (state: TasksStateType, action: ActionType): TasksStateType => {
+
+const initialState: TasksStateType = {}
+export const tasksReducer = (state = initialState, action: ActionType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             const todolistId = action.payload.todolistId
