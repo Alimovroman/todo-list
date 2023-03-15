@@ -1,10 +1,11 @@
-import React, {ChangeEvent, FC, useState} from 'react';
+import React, {ChangeEvent, FC, memo, useState} from 'react';
 
 type EditPropsType = {
     oldTitle: string
     callback: (newTitle: string) => void
 }
-const EditableSpan: FC<EditPropsType> = ({oldTitle, callback}) => {
+const EditableSpan: FC<EditPropsType> = memo(({oldTitle, callback}) => {
+
     const [newTitle, setNewTitle] = useState<string>(oldTitle)
     const [edit, setEdit] = useState(false)
     const editFullHandler = () => {
@@ -19,6 +20,6 @@ const EditableSpan: FC<EditPropsType> = ({oldTitle, callback}) => {
             ? <input value={newTitle} onBlur={editFullHandler} onChange={onChangeTitle} autoFocus={true}/>
             : <span onDoubleClick={editFullHandler}>{oldTitle}</span>
     );
-};
+});
 
 export default EditableSpan;

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, FC, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, FC, useState, memo} from 'react';
 import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
 
@@ -7,12 +7,9 @@ type SuperInputProps = {
 
 }
 
-const SuperInput: FC<SuperInputProps> = (props) => {
+const SuperInput: FC<SuperInputProps> = memo((props) => {
     const [title, setTitle] = useState<string>('')
-    const [error, setError] = useState<boolean>(false)
-
-    // const errorMessage = error && <div className={'error'}>Error</div>
-    // const errorClassName = error ? 'input-error' : ''
+    const [error, setError] = useState<boolean | null>(false)
 
     const addTask = () => {
         const trimmedTitle = title.trim()
@@ -30,6 +27,7 @@ const SuperInput: FC<SuperInputProps> = (props) => {
         setError(false)
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+        if (error) setError(null)
         e.key === 'Enter' && addTask()
     }
     const buttonStyle = {
@@ -39,14 +37,9 @@ const SuperInput: FC<SuperInputProps> = (props) => {
         minHeight: '40px',
         background: "hotpink"
     }
+    console.log('superInput')
     return (
         <div className={'super-input'}>
-            {/*<input*/}
-            {/*    onChange={e => onChangeHandler(e)}*/}
-            {/*    value={title}*/}
-            {/*    onKeyDown={e => onKeyDownHandler(e)}*/}
-            {/*    className={errorClassName}*/}
-            {/*/>*/}
             <TextField id="standard-basic"
                        size={"small"}
                        label={error ? 'Title is required' : 'Please type you title'}
@@ -59,9 +52,8 @@ const SuperInput: FC<SuperInputProps> = (props) => {
             <Button variant="contained" onClick={addTask} style={buttonStyle}>
                 +
             </Button>
-            {/*{errorMessage}*/}
         </div>
     );
-};
+});
 
 export default SuperInput;
