@@ -1,20 +1,41 @@
-import React, {ChangeEvent, KeyboardEvent, FC, useState, memo} from 'react';
-import Button from '@mui/material/Button';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+import SuperInput from "../component/SuperInput";
+import {action} from "@storybook/addon-actions";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
-type SuperInputProps = {
-    callback: (str: string) => void
 
-}
+// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+export default {
+    title: 'Todolist/AddItemForm',
+    component: SuperInput,
+    // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+    argTypes: {
+        callback: {
+            description: 'Button click'
+        }
+    },
+} as ComponentMeta<typeof SuperInput>;
 
-const SuperInput: FC<SuperInputProps> = memo((props) => {
+// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+const Template: ComponentStory<typeof SuperInput> = (args) => <SuperInput {...args} />;
+
+export const AddItenStory = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+AddItenStory.args = {
+    callback: action('Button Click')
+};
+
+
+const Template1: ComponentStory<typeof SuperInput> = (args) => {
     const [title, setTitle] = useState<string>('')
-    const [error, setError] = useState<boolean | null>(false)
+    const [error, setError] = useState<boolean | null>(true)
 
     const addTask = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle !== '') {
-            props.callback(title)
+            args.callback(title)
 
         } else {
             setError(true)
@@ -51,9 +72,11 @@ const SuperInput: FC<SuperInputProps> = memo((props) => {
             />
             <Button variant="contained" onClick={addTask} style={buttonStyle}>
                 +
-            </Button>!
+            </Button>
         </div>
     );
-});
-
-export default SuperInput;
+};
+export const AddItemFormStoryError = Template1.bind({});
+AddItemFormStoryError.args = {
+    callback: action('Button Click')
+};

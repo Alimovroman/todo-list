@@ -1,7 +1,6 @@
-import React, {useCallback, useReducer, useState} from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import ToDoList from "./ToDoList";
-import {v1} from "uuid";
 import SuperInput from "./component/SuperInput";
 import ButtonAppBar from "./component/ButtonAppBar";
 import Container from '@mui/material/Container';
@@ -36,9 +35,6 @@ export type TasksStateType = {
 
 function AppWithRedux() {
 
-    let todolistID1 = v1();
-    let todolistID2 = v1();
-
     let todolists = useSelector<AppRootStateType, Array<TodolistsType>>((state) => state.todolists)
     let tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch<Dispatch>()
@@ -64,16 +60,6 @@ function AppWithRedux() {
         dispatch(addTaskAC(title, todoListId))
     }, [dispatch])
 
-    // const editTask = useCallback((todoListId: string, taskId: string, newTitle: string) => {
-    //     dispatch(changeTitleAC(taskId, newTitle, todoListId))
-    // }, [dispatch])
-    // const changeTaskStatus = useCallback((todoListId: string, taskId: string, isDone: boolean) => {
-    //     dispatch(changeTaskStatusAC(taskId, isDone, todoListId))
-    // }, [dispatch])
-    // const removeTask = useCallback((todoListId: string, taskId: string) => {
-    //     dispatch(removeTaskAC(taskId, todoListId))
-    // }, [dispatch])
-
     return (
         <div className="App">
             <ButtonAppBar/>
@@ -92,9 +78,6 @@ function AppWithRedux() {
                                                   addTask={addTask}
                                                   todolist={e}
                                                   tasks={tasks[e.id]}
-                                            // editTask={editTask}
-                                            // changeTaskStatus={changeTaskStatus}
-                                            // removeTask={removeTask}
                                                   changeFilter={changeFilter}
                                                   removeTodoList={removeTodoList}
                                                   editMainTitle={editMainTitle}
