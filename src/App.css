@@ -1,36 +1,26 @@
-/*.App {*/
-/*  padding: 30px;*/
-/*  display: flex;*/
-/*  width: 100%;*/
-/*}*/
+/*
+.App {
+  padding: 30px;
+  display: flex;
+}
 
-/*.App > div {*/
-/*  margin-right: 50px;*/
-/*}*/
-/*.task-done {*/
-/*  text-decoration: line-through;*/
-/*  opacity: 0.5;*/
-/*}*/
-/*.task {*/
-/*  font-weight: bold;*/
-/*}*/
-/*.btn-active {*/
-/*color: white;*/
-/*background-color: hotpink;*/
-/*border: 2px solid hotpink;*/
-/*border-radius: 5px;*/
-/*}*/
-/*.input-error {*/
-/*  border:5px solid red;*/
-/*  outline: none}*/
-/*.error {*/
-/*color: red;*/
-/*}*/
-/*.header-task {*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: space-between;*/
-/*}*/
-/*.header-task button {*/
-/*  height: 22px;*/
-/*}*/
+.App > div {
+  margin-right: 50px;
+}
+
+.error {
+  border: red 1px solid;
+}
+
+.error-message {
+  color: red;
+}
+
+.active-filter {
+  background-color: aquamarine;
+}
+
+.is-done {
+  opacity: 0.5;
+}
+*/
