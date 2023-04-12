@@ -4,7 +4,7 @@ const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
     headers: {
-        'API-KEY': '8f2534e2-22a4-4052-894e-a66c04807482'
+        'API-KEY': 'ffdb5a84-7670-48ab-a1c2-5437e028d270'
     }
 })
 
@@ -86,8 +86,13 @@ export type UpdateTaskModelType = {
     startDate: string
     deadline: string
 }
-export type GetTasksResponse = {
+type GetTasksResponse = {
     error: string | null
     totalCount: number
     items: TaskType[]
+}
+export enum ResultCode {
+    OK = 0,
+    Error = 1,
+    Captcha = 10
 }
