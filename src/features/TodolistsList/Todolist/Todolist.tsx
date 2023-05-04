@@ -1,13 +1,14 @@
-import React, {useCallback, useEffect} from 'react'
-import {AddItemForm} from '../../../components/AddItemForm/AddItemForm'
-import {EditableSpan} from '../../../components/EditableSpan/EditableSpan'
-import {Button, IconButton} from '@material-ui/core'
-import {Delete} from '@material-ui/icons'
-import {Task} from './Task/Task'
-import {TaskStatuses, TaskType} from '../../../api/todolists-api'
-import {FilterValuesType, TodolistDomainType} from '../todolists-reducer'
-import {useDispatch} from 'react-redux'
-import {fetchTasksTC} from '../tasks-reducer'
+import React, { useCallback, useEffect } from 'react'
+import { AddItemForm } from '../../../common/components/AddItemForm/AddItemForm'
+import { EditableSpan } from '../../../common/components/EditableSpan/EditableSpan'
+import { Task } from './Task/Task'
+import { FilterValuesType, TodolistDomainType } from 'features/TodolistsList/todolists.reducer'
+import { tasksThunk } from 'features/TodolistsList/tasks.reducer'
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { Button, IconButton } from '@mui/material'
+import { Delete } from '@mui/icons-material'
+import {TaskStatuses} from "../../../common/enum";
+import {TaskType} from "../todolists.api";
 
 type PropsType = {
     todolist: TodolistDomainType
@@ -23,14 +24,14 @@ type PropsType = {
 }
 
 export const Todolist = React.memo(function ({demo = false, ...props}: PropsType) {
-    console.log('Todolist called')
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
+
     useEffect(() => {
         if (demo) {
             return
         }
-        const thunk = fetchTasksTC(props.todolist.id)
+        const thunk = tasksThunk.fetchTasks(props.todolist.id)
         dispatch(thunk)
     }, [])
 
@@ -41,6 +42,7 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
     const removeTodolist = () => {
         props.removeTodolist(props.todolist.id)
     }
+
     const changeTodolistTitle = useCallback((title: string) => {
         props.changeTodolistTitle(props.todolist.id, title)
     }, [props.todolist.id, props.changeTodolistTitle])
@@ -78,7 +80,7 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
         <div style={{paddingTop: '10px'}}>
             <Button variant={props.todolist.filter === 'all' ? 'outlined' : 'text'}
                     onClick={onAllClickHandler}
-                    color={'default'}
+                    color={'inherit'}
             >All
             </Button>
             <Button variant={props.todolist.filter === 'active' ? 'outlined' : 'text'}
