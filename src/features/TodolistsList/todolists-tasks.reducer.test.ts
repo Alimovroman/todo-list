@@ -3,9 +3,9 @@ import {
 	todolistsActions,
 	todolistsReducer,
 	todolistsThunks
-} from 'features/TodolistsList/todolists.reducer'
-import { tasksReducer, TasksStateType } from 'features/TodolistsList/tasks.reducer'
-import { TodolistType } from 'features/TodolistsList/todolists.api';
+} from 'features/todolistsList/todolists/todolists.reducer'
+import { tasksReducer, TasksStateType } from 'features/todolistsList/tasks/tasks.reducer'
+import { TodolistType } from 'features/todolistsList/todolists/todolists.api';
 
 
 test('ids should be equals', () => {
