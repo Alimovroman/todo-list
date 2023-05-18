@@ -37,11 +37,6 @@ const slice = createSlice({
                 })
             .addMatcher(action => action.type.endsWith('/rejected'),
                 (state, action) => {
-                    // if(action.payload) {
-                    //     state.error = action.payload.messages.length ? action.payload.messages[0] : 'Some error occurred'
-                    // } else {
-                    //     state.error = action.error.message ? action.error.message : 'Some error occurred'
-                    // }
                     const {payload, error} = action
                     if (payload) {
                         if (payload.showGlobalError) {

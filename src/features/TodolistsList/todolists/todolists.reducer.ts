@@ -1,14 +1,14 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RequestStatusType} from 'app/app.reducer'
 import {todolistsApi, TodolistType, UpdateTodolistTitleArgType} from 'features/todolistsList/todolists/todolists.api';
-import {createAppAsyncThunk, handleServerAppError, thunkTryCatch} from 'common/utils';
+import {createAppAsyncThunk} from 'common/utils';
 import {ResultCode} from 'common/enums';
 import {clearTasksAndTodolists} from 'common/actions';
 
 const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>
 ('todo/fetchTodolists', async () => {
-        const res = await todolistsApi.getTodolists()
-        return {todolists: res.data}
+    const res = await todolistsApi.getTodolists()
+    return {todolists: res.data}
 })
 
 const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>
@@ -19,29 +19,27 @@ const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>
     } else {
         return rejectWithValue({data: res.data, showGlobalError: false})
     }
-
 })
 
 const removeTodolist = createAppAsyncThunk<{ id: string }, string>
 ('todo/removeTodolist', async (id, {rejectWithValue, dispatch}) => {
-
-        dispatch(todolistsActions.changeTodolistEntityStatus({id, entityStatus: 'loading'}))
-        const res = await todolistsApi.deleteTodolist(id)
-        if (res.data.resultCode === ResultCode.Success) {
-            return {id}
-        } else {
-            return rejectWithValue({data: res.data, showGlobalError: true})
-        }
+    dispatch(todolistsActions.changeTodolistEntityStatus({id, entityStatus: 'loading'}))
+    const res = await todolistsApi.deleteTodolist(id)
+    if (res.data.resultCode === ResultCode.Success) {
+        return {id}
+    } else {
+        return rejectWithValue({data: res.data, showGlobalError: true})
+    }
 })
 
 const changeTodolistTitle = createAppAsyncThunk<UpdateTodolistTitleArgType, UpdateTodolistTitleArgType>
 ('todo/changeTodolistTitle', async (arg, {rejectWithValue}) => {
-        const res = await todolistsApi.updateTodolist(arg)
-        if (res.data.resultCode === ResultCode.Success) {
-            return arg
-        } else {
-            return rejectWithValue({data: res.data, showGlobalError: true})
-        }
+    const res = await todolistsApi.updateTodolist(arg)
+    if (res.data.resultCode === ResultCode.Success) {
+        return arg
+    } else {
+        return rejectWithValue({data: res.data, showGlobalError: true})
+    }
 })
 
 const initialState: TodolistDomainType[] = []
